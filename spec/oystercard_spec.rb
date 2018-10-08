@@ -29,5 +29,28 @@ describe Oystercard do
       expect { subject.deduct(5) }.to change { subject.balance }.by(-5)
     end
   end
+  describe '#in_journey?' do
+    it 'should show oyster card as not in journey when initialized' do
+      oystercard = Oystercard.new
+      expect(oystercard).not_to be_in_journey
+    end
 
+    it 'can touch out' do
+      subject.top_up(5)
+      subject.touch_in
+      subject.touch_out
+       expect(subject).not_to be_in_journey
+    end
+  end
+  describe 'touch_in' do
+    it 'can touch in' do
+      subject.top_up(5)
+      subject.touch_in
+      expect(subject).to be_in_journey
+    end
+    it 'prevents touching in if funds insufficient' do
+    oystercard = Oystercard.new
+    expect { oystercard.touch_in }.to raise_error "Not enough money"
+    end
+  end
 end
