@@ -1,6 +1,7 @@
 class Oystercard
 MAXIMUM_BALANCE = 90
 MINIMUM_TRAVEL_BALANCE = 1
+MINIMUM_CHARGE = 1
 attr_reader :balance
 attr_accessor :status
 
@@ -28,6 +29,7 @@ attr_accessor :status
   end
 
   def touch_out
+    deduct(MINIMUM_CHARGE)
     change_status
   end
 
